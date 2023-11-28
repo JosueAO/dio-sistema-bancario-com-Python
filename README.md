@@ -1,4 +1,12 @@
-# Em andamento...
+# DIO - Digital Innovation One. (https://www.dio.me)
+
+## Este é um dos projetos que faz parte da Formação Python Developer oferecida pela plataforma Digital Innovation One (DIO).
+
+# Criando um Sistema Bancário com Python - Formação Python Developer
+
+# Sistema Bancário Simples
+
+Um sistema bancário simples implementado em Python, utilizando classes para representar clientes, contas e transações.
 
 ## Diagrama de Classes
 
@@ -64,3 +72,18 @@ classDiagram
 
 
 ```
+
+## Funcionalidades
+
+- Depósito
+- Saque
+- Exibição de extrato
+- Criação de contas
+- Listagem de contas
+- Criação de clientes
+
+## Pré-requisitos
+
+- Python 3.x instalado (https://www.python.org/)
+- Biblioteca textwrap (já incluída no Python padrão)
+
