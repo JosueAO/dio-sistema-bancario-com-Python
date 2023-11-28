@@ -4,64 +4,65 @@
 
 ```mermaid
 classDiagram
-    class Cliente {
-        - endereco: String
-        - contas: List<Conta>
-        + realizarTransacao(conta: Conta, transacao: Transacao): void
-        + adicionarConta(conta: Conta): void
-    }
 
-    class PessoaFisica {
-        - nome: String
-        - dataNascimento: String
-        - cpf: String
-    }
+  class Cliente <<abstract>> {
+    +endereco: string
+    +contas: Conta[]
+    {abstract} +realizarTransacao(conta: Conta, transacao: Transacao): void
+    {abstract} +adicionarConta(conta: Conta): void
+  }
 
-    class PessoaJuridica {
-        - razaoSocial: String
-        - cnpj: String
-    }
+  class PessoaFisica {
+    +nome: string
+    +dataNascimento: string
+    +cpf: string
+  }
 
-    class Conta {
-        - saldo: Float
-        - numero: String
-        - agencia: String
-        - cliente: Cliente
-        - historico: Historico
-        + sacar(valor: Float): void
-        + depositar(valor: Float): void
-    }
+  class PessoaJuridica {
+    +razaoSocial: string
+    +cnpj: string
+  }
 
-    class ContaCorrente {
-        - limite: Float
-        - limiteSaques: Int
-    }
+  class Conta <<abstract>> {
+    +saldo: float
+    +numero: string
+    +agencia: string
+    +cliente: Cliente
+    +historico: Historico
+    {abstract} +sacar(valor: float): bool
+    {abstract} +depositar(valor: float): bool
+  }
 
-    class ContaPoupanca {
-        - juros: Float
-    }
+  class ContaCorrente {
+    +limite: float
+    +limiteSaques: int
+  }
 
-    class Historico {
-        - transacoes: List<Transacao>
-        + adicionarTransacao(transacao: Transacao): void
-    }
+  class ContaPoupanca {
+    +juros: float
+  }
 
-    class Transacao {
-        + valor: Float
-        + registrar(conta: Conta): void
-    }
+  class Historico {
+    +transacoes: Transacao[]
+    +adicionarTransacao(transacao: Transacao): void
+  }
 
-    class Saque {
-    }
+  class Transacao <<abstract>> {
+    {abstract} +valor: float
+    {abstract} registrar(conta: Conta): void
+  }
 
-    class Deposito {
-    }
+  class Saque {
+  }
 
-    Cliente --|> PessoaFisica
-    Cliente --|> PessoaJuridica
-    Conta *--|> ContaCorrente
-    Conta *--|> ContaPoupanca
-    Conta *--|> Historico
-    Transacao <|-- Saque
-    Transacao <|-- Deposito
+  class Deposito {
+  }
+
+  Cliente <|-- PessoaFisica
+  Cliente <|-- PessoaJuridica
+  Conta *--|> ContaCorrente
+  Conta *--|> ContaPoupanca
+  Conta *--|> Historico
+  Transacao <|-- Saque
+  Transacao <|-- Deposito
 ```
