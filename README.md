@@ -4,65 +4,63 @@
 
 ```mermaid
 classDiagram
-  class Cliente <<abstract>> {
-    +endereco: string
-    +contas: Conta[]
-    {abstract} +realizarTransacao(conta: Conta, transacao: Transacao): void
-    {abstract} +adicionarConta(conta: Conta): void
+  class Cliente {
+    -endereco: string
+    -contas: Conta[]
+    +realizarTransacao(conta: Conta, transacao: Transacao): void
+    +adicionarConta(conta: Conta): void
   }
 
   class PessoaFisica {
-    +nome: string
-    +dataNascimento: string
-    +cpf: string
+    -nome: string
+    -dataNascimento: string
+    -cpf: string
+    +PessoaFisica(nome: string, dataNascimento: string, cpf: string, endereco: string)
   }
 
-  class PessoaJuridica {
-    +razaoSocial: string
-    +cnpj: string
-  }
-
-  class Conta <<abstract>> {
-    +saldo: float
-    +numero: string
-    +agencia: string
-    +cliente: Cliente
-    +historico: Historico
-    {abstract} +sacar(valor: float): bool
-    {abstract} +depositar(valor: float): bool
+  class Conta {
+    -saldo: float
+    -numero: string
+    -agencia: string
+    -cliente: Cliente
+    -historico: Historico
+    +novaConta(cliente: Cliente, numero: string): Conta
+    +sacar(valor: float): boolean
+    +depositar(valor: float): boolean
   }
 
   class ContaCorrente {
-    +limite: float
-    +limiteSaques: int
-  }
-
-  class ContaPoupanca {
-    +juros: float
+    -limite: float
+    -limiteSaques: int
+    +sacar(valor: float): boolean
+    +toString(): string
   }
 
   class Historico {
-    +transacoes: Transacao[]
+    -transacoes: object[]
     +adicionarTransacao(transacao: Transacao): void
   }
 
-  class Transacao <<abstract>> {
-    {abstract} +valor: float
-    {abstract} registrar(conta: Conta): void
+  class Transacao {
+    +valor: float
+    +registrar(conta: Conta): void
   }
 
   class Saque {
+    -valor: float
   }
 
   class Deposito {
+    -valor: float
   }
 
+  Cliente --o Conta : "0..*"
   Cliente <|-- PessoaFisica
-  Cliente <|-- PessoaJuridica
-  Conta *--|> ContaCorrente
-  Conta *--|> ContaPoupanca
-  Conta *--|> Historico
+  Conta <|-- ContaCorrente
+  Conta --o Historico : "1"
+  Conta --o Transacao : "0..*"
   Transacao <|-- Saque
   Transacao <|-- Deposito
-  
+
+
 ```
